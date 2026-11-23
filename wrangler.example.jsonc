@@ -1,0 +1,46 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "small-business-workflow",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "src/server.ts",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "<your-panel-domain>", "custom_domain": true }],
+  "assets": { "binding": "ASSETS", "run_worker_first": true },
+  "observability": { "enabled": true },
+  "triggers": { "crons": ["*/15 * * * *", "0 6 * * *", "0 14 28-31 * *"] },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "small-business-workflow", "database_id": "<your-d1-database-id>", "migrations_dir": "migrations" }
+  ],
+  "r2_buckets": [{ "binding": "FILES", "bucket_name": "small-business-workflow-files" }],
+  "ratelimits": [
+    { "name": "ACTION_LIMIT", "namespace_id": "1001", "simple": { "limit": 20, "period": 60 } },
+    { "name": "AUTH_LIMIT", "namespace_id": "1002", "simple": { "limit": 10, "period": 60 } }
+  ],
+  "vars": {
+    "APP_NAME": "Business Workflow",
+    "PANEL_URL": "https://<your-panel-domain>",
+    "DEFAULT_LOCALE": "en",
+    "CURRENCY": "TRY",
+    "TIME_ZONE": "Europe/Istanbul",
+    "HOLIDAY_COUNTRY": "TR",
+    "BOOKS_START_DATE": "",
+    "ALLOWED_EMAIL_DOMAIN": "",
+    "ADMIN_EMAIL": "",
+    "AUTH_MODE": "password",
+    "PASSWORD_ITERATIONS": "100000",
+    "COMPANY_NAME": "",
+    "COMPANY_ADDRESS": "",
+    "COMPANY_REGISTRATION": "",
+    "COMPANY_CONTACT_EMAIL": "",
+    "MAIL_MODE": "log",
+    "MAIL_FROM": "",
+    "MAIL_ONLY": "",
+    "ACCOUNTING_TO": "",
+    "ACCOUNTING_CC": "",
+    "ACCOUNTING_REPLY_TO": "",
+    "ACCOUNTING_SALUTATION": "",
+    "ACCOUNTING_LOCALE": "en"
+  }
+}
